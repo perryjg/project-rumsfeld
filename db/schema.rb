@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425160314) do
+ActiveRecord::Schema.define(:version => 20120425162802) do
 
   create_table "letters", :force => true do |t|
     t.string   "sender"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20120425160314) do
     t.integer  "request_type_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.text     "request_text"
   end
 
   add_index "letters", ["request_type_id"], :name => "index_letters_on_request_type_id"
