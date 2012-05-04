@@ -2,9 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.0'
 gem 'bootstrap-sass'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 group :development do
 	gem 'sqlite3'
+	gem 'annotate'
 end
 
 group :assets do
@@ -25,7 +27,6 @@ group :production do
 end
 
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

@@ -1,10 +1,29 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  email        :string(255)
+#  phone        :string(255)
+#  title        :string(255)
+#  organization :string(255)
+#  address      :string(255)
+#  city         :string(255)
+#  state        :string(255)
+#  zip          :string(255)
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#
+
 require 'spec_helper'
 
 describe User do
 	before { @user = User.new(name: 'Joe Reporter', email: 'foo@bar.com',
 		                       phone: '555-555-5555', title: 'Reporter',
 		                       organization: 'The news', address: '123 Main St',
-		                       city: 'Atlnata', state: 'GA', zip: '33333') }
+		                       city: 'Atlnata', state: 'GA', zip: '33333',
+		                       password: 'foobar', password_confirmation: 'foobar') }
 
 	subject { @user }
 
@@ -17,6 +36,9 @@ describe User do
 	it { should respond_to(:city) }
 	it { should respond_to(:state) }
 	it { should respond_to(:zip) }
+	it { should respond_to(:password_digest) }
+	it { should respond_to(:password) }
+	it { should respond_to(:password_confirmation) }
 
 	it { should be_valid }
 
@@ -27,6 +49,56 @@ describe User do
 
 	describe "when email is not present" do
 		before { @user.email = " " }
+		it { should_not be_valid }
+	end
+
+	describe "when email format is invalid" do
+		it "should be invalid" do
+			addresses = %w[user@foo,com user_at_foo.org example.user@foo.]
+			addresses.each do |invalid_email|
+				@user.email = invalid_email
+				@user.should_not be_valid
+			end
+		end
+	end
+
+	describe "when email format is valid" do
+		it "should be valid" do
+			addresses = %w[user@foo.com USER@f.b.org example.user@foo.cn]
+			addresses.each do |valid_email|
+				@user.email = valid_email
+				@user.should be_valid
+			end
+		end
+	end
+
+	describe "when email is already taken" do
+		before do
+			user_with_same_email = @user.dup
+			user_with_same_email.email = @user.email.upcase
+			user_with_same_email.save
+		end
+
+		it { should_not be_valid }
+	end
+
+	describe "when password is not present" do
+		before { @user.password = @user.password_confirmation = " " }
+		it { should_not be_valid }
+	end
+
+	describe "when password is too short" do
+		before { @user.password = @user.password_confirmation = "foo" }
+		it { should_not be_valid }
+	end
+
+	describe "when password does not match confirmation" do
+		before { @user.password_confirmation = "mismatch" }
+		it { should_not be_valid }
+	end
+
+	describe "when password confirmation is nil" do
+		before { @user.password_confirmation = nil }
 		it { should_not be_valid }
 	end
 end
