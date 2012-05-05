@@ -1,6 +1,6 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
-gem 'rails', '3.2.0'
+gem 'rails', '3.2.3'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -20,6 +20,7 @@ gem 'jquery-rails'
 group :test do
 	gem 'rspec-rails'
 	gem 'capybara'
+	gem 'factory_girl_rails'
 end
 
 group :production do
