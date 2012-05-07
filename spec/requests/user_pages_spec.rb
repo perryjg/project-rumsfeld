@@ -40,6 +40,13 @@ describe "User pages" do
       it "should create a user" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
+      
+      describe "after creating the user" do
+        before { click_button submit }
+        
+        it { should have_selector('title', text: "Example User") }
+        it { should have_link('Sign out', href: signout_path) }
+      end
     end
   end
 end
