@@ -12,7 +12,12 @@ describe "User pages" do
 
 	describe "user home page" do
 	  let(:user) { FactoryGirl.create(:user) }
-		before { visit user_path( user ) }
+    before { visit signin_path }
+    before do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Sign in'
+    end
 
 		it { should have_selector('title', text: user.name) }
 	end
@@ -52,6 +57,12 @@ describe "User pages" do
 
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
+    before { visit signin_path }
+    before do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Sign in'
+    end
     before { visit edit_user_path(user) }
 
     describe "page" do
