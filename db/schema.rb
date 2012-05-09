@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504202042) do
+ActiveRecord::Schema.define(:version => 20120509152638) do
 
   create_table "letters", :force => true do |t|
     t.string   "sender"
@@ -42,6 +42,21 @@ ActiveRecord::Schema.define(:version => 20120504202042) do
     t.text     "template"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "requests", :force => true do |t|
+    t.string   "recipient_name"
+    t.string   "recipient_title"
+    t.string   "recipient_organization"
+    t.string   "recipient_addr"
+    t.string   "recipient_city"
+    t.string   "recipient_state"
+    t.string   "recipient_zip"
+    t.text     "request_text"
+    t.integer  "user_id"
+    t.integer  "request_type_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "users", :force => true do |t|
