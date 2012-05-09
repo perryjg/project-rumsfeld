@@ -19,11 +19,7 @@
 require 'spec_helper'
 
 describe User do
-	before { @user = User.new(name: 'Joe Reporter', email: 'foo@bar.com',
-		                       phone: '555-555-5555', title: 'Reporter',
-		                       organization: 'The news', address: '123 Main St',
-		                       city: 'Atlnata', state: 'GA', zip: '33333',
-		                       password: 'foobar', password_confirmation: 'foobar') }
+	before { @user = FactoryGirl.build(:user) }
 
 	subject { @user }
 
