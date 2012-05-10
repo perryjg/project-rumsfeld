@@ -8,53 +8,77 @@
     </section>
   </aside>
 </div>
-<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
+<div class="row">
+  <div class="span3">
+    <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
+    <p>
+      <b>Name:</b>
+      <%= @user.name %>
+    </p>
 
-<p>
-  <b>Phone:</b>
-  <%= @user.phone %>
-</p>
+    <p>
+      <b>Email:</b>
+      <%= @user.email %>
+    </p>
 
-<p>
-  <b>Title:</b>
-  <%= @user.title %>
-</p>
+    <p>
+      <b>Phone:</b>
+      <%= @user.phone %>
+    </p>
 
-<p>
-  <b>Organization:</b>
-  <%= @user.organization %>
-</p>
+    <p>
+      <b>Title:</b>
+      <%= @user.title %>
+    </p>
 
-<p>
-  <b>Address:</b>
-  <%= @user.address %>
-</p>
+    <p>
+      <b>Organization:</b>
+      <%= @user.organization %>
+    </p>
 
-<p>
-  <b>City:</b>
-  <%= @user.city %>
-</p>
+    <p>
+      <b>Address:</b>
+      <%= @user.address %>
+    </p>
 
-<p>
-  <b>State:</b>
-  <%= @user.state %>
-</p>
+    <p>
+      <b>City:</b>
+      <%= @user.city %>
+    </p>
 
-<p>
-  <b>Zip:</b>
-  <%= @user.zip %>
-</p>
+    <p>
+      <b>State:</b>
+      <%= @user.state %>
+    </p>
 
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+    <p>
+      <b>Zip:</b>
+      <%= @user.zip %>
+    </p>
+  </div>
+  <div class="span8">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav pull-left">
+            <li class="active"><%= link_to "New Request", new_request_path %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span8">
+    <table width="100%" class="table table-condensed">
+      <% @user.requests.each do |request| %>
+      <tr>
+        <td><%= request.recipient_organization %></td>
+        <td><%= request.created_at.strftime("%a, %B %d, %Y") %></td>
+        <td><%= truncate(request.request_text, length: 50) %></td>
+        <td><%= link_to 'Show', request_path(request), class: "btn btn-mini btn-primary active"%></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

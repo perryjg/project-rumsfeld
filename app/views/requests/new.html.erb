@@ -1,0 +1,33 @@
+<h1>New request</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@request) do |f| %>
+      <%= f.label :recipient_name %>
+      <%= f.text_field :recipient_name %>
+
+      <%= f.label :recipient_title %>
+      <%= f.text_field :recipient_title %>
+
+      <%= f.label :recipient_organization %>
+      <%= f.text_field :recipient_organization %>
+
+      <%= f.label :recipient_addr %>
+      <%= f.text_field :recipient_addr %>
+
+      <%= f.label :recipient_city %>
+      <%= f.text_field :recipient_city %>
+
+      <%= f.label :recipient_state %>
+      <%= f.text_field :recipient_state %>
+
+      <%= f.label :recipient_zip %>
+      <%= f.text_field :recipient_zip %>
+
+      <%= f.label :request_text %>
+      <%= f.text_area :request_text, class: "input-small", style: "width: 465px", rows: "5" %>
+      <div class="form-action">
+	      <%= f.submit "Create new request", class: "btn btn-large btn-primary" %>
+	    </div>
+    <% end %>
+  </div>
+</div>
