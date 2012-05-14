@@ -11,26 +11,38 @@ describe "User pages" do
 	end
 
 	describe "user home page" do
-	  let(:user) { FactoryGirl.create(:user) }
-    before { visit signin_path }
+    let!(:user)     { FactoryGirl.create(:user) }
+    let!(:request1) { FactoryGirl.create(:request, user: user) }
+    let!(:request2) { FactoryGirl.create(:request, user: user) }
     before do
+      visit signin_path
       fill_in 'Email', with: user.email
       fill_in 'Password', with: user.password
       click_button 'Sign in'
     end
 
+		it { should have_selector('h1',    text: user.name) }
 		it { should have_selector('title', text: user.name) }
+		
+		describe "requests" do
+		  it { should have_content(request1.recipient_organization) }
+		  it { should have_content(request2.recipient_organization) }
+		  
+		  it { should have_link('Show', href: request_path(request1)) }
+		  it { should have_link('Show', href: request_path(request2)) }
+		  
+		  it { should have_link('Edit', href: edit_request_path(request1)) }
+		  it { should have_link('Edit', href: edit_request_path(request2)) }
+	  end
 	end
 	
   describe "signup" do
-
+    #let(:submit) { "Create my account" }
     before { visit signup_path }
-
-    let(:submit) { "Create my account" }
 
     describe "with invalid information" do
       it "should not create a user" do
-        expect { click_button submit }.not_to change(User, :count)
+        expect { click_button "Create my account" }.not_to change(User, :count)
       end
     end
 
@@ -43,11 +55,11 @@ describe "User pages" do
       end
 
       it "should create a user" do
-        expect { click_button submit }.to change(User, :count).by(1)
+        expect { click_button "Create my account" }.to change(User, :count).by(1)
       end
       
       describe "after creating the user" do
-        before { click_button submit }
+        before { click_button "Create my account" }
         
         it { should have_selector('title', text: "Example User") }
         it { should have_link('Sign out', href: signout_path) }
@@ -57,13 +69,13 @@ describe "User pages" do
 
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
-    before { visit signin_path }
     before do
+      visit signin_path
       fill_in 'Email', with: user.email
       fill_in 'Password', with: user.password
       click_button 'Sign in'
+      visit edit_user_path(user)
     end
-    before { visit edit_user_path(user) }
 
     describe "page" do
       it { should have_selector('h1',    text: "Update your profile") }

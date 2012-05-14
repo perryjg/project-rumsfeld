@@ -35,6 +35,7 @@ describe 'Static Pages' do
 		before { visit root_path }
 		
 		context "should have standard links" do
+			it { should have_link("Home",         href: root_path   ) }
 			it { should have_link("Help",         href: help_path   ) }
 			it { should have_link("About",        href: about_path  ) }
 			it { should have_link("Contact",      href: contact_path) }
@@ -42,7 +43,6 @@ describe 'Static Pages' do
 		end
 
 		context "links should go to right pages" do
-
 			it "should go to Hlep page" do
 				click_link 'Help'
 				page.should have_selector('title', text: 'Help')
@@ -58,5 +58,10 @@ describe 'Static Pages' do
 				page.should have_selector('title', text: 'Contact')
 			end
 		end
+		
+		context "when user not signed in" do
+		  it { should_not have_link('Sign out') }
+		  it { should_not have_link('Requests') }
+	  end
 	end
 end

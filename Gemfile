@@ -9,6 +9,11 @@ group :development do
 	gem 'annotate'
 end
 
+group :development, :test do
+	gem 'rspec-rails'
+	gem 'factory_girl_rails'
+end
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -18,9 +23,9 @@ end
 gem 'jquery-rails'
 
 group :test do
-	gem 'rspec-rails'
 	gem 'capybara'
-	gem 'factory_girl_rails'
+	gem 'faker'
+	gem 'database_cleaner'
 end
 
 group :production do

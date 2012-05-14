@@ -1,4 +1,6 @@
 class RequestsController < ApplicationController
+  before_filter :authorize
+  
   # GET /requests
   # GET /requests.json
   def index
@@ -25,6 +27,7 @@ class RequestsController < ApplicationController
   # GET /requests/new.json
   def new
     @request = Request.new
+    @user = current_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,17 +37,19 @@ class RequestsController < ApplicationController
 
   # GET /requests/1/edit
   def edit
-    @request = Request.find(params[:id])
+    @user = current_user
+    @request = @user.requests.find(params[:id])
   end
 
   # POST /requests
   # POST /requests.json
   def create
-    @request = Request.new(params[:request])
+    @user = current_user
+    @request = @user.requests.new(params[:request])
 
     respond_to do |format|
       if @request.save
-        format.html { redirect_to @request, notice: 'Request was successfully created.' }
+        format.html { redirect_to @user, notice: 'Request was successfully created.' }
         format.json { render json: @request, status: :created, location: @request }
       else
         format.html { render action: "new" }
@@ -56,7 +61,8 @@ class RequestsController < ApplicationController
   # PUT /requests/1
   # PUT /requests/1.json
   def update
-    @request = Request.find(params[:id])
+    @user = current_user
+    @request = @user.requests.find(params[:id])
 
     respond_to do |format|
       if @request.update_attributes(params[:request])
@@ -72,7 +78,8 @@ class RequestsController < ApplicationController
   # DELETE /requests/1
   # DELETE /requests/1.json
   def destroy
-    @request = Request.find(params[:id])
+    @user = current_user
+    @request = @user.requests.find(params[:id])
     @request.destroy
 
     respond_to do |format|

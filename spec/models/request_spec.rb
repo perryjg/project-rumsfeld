@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe Request do
-	before { @request = FactoryGirl.build(:request) }
+  before do
+    @user = FactoryGirl.create(:user)
+    @request = FactoryGirl.build(:request, user: @user)
+  end
 	subject { @request }
 
 	it { should respond_to(:recipient_name) }
@@ -16,11 +19,6 @@ describe Request do
 	it { should respond_to(:request_type_id) }
 
 	it { should be_valid }
-
-	describe "when user id is not present" do
-		before { @request.user_id = "" }
-		it { should_not be_valid }
-	end
 
 	describe "when recipient name is not present" do
 		before { @request.recipient_name = "" }
@@ -56,4 +54,22 @@ describe Request do
 		before { @request.recipient_state = 'G' }
 		it { should_not be_valid }
 	end
+	
+	describe "User association" do
+	  it { should respond_to(:user) }
+	  its(:user) { should == @user }
+	  
+	  describe "when user_id is not present" do
+	    before { @request.user_id = nil }
+	    it { should_not be_valid }
+    end
+	  
+	  describe "accessible attributes" do
+	    it "should not allow access to user_id" do
+	      expect do
+	        Request.new(FactoryGirl.attributes_for(:request, user_id: @user.id))
+        end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      end
+    end
+  end
 end
