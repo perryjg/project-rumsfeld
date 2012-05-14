@@ -70,4 +70,35 @@ describe "Request pages" do
       it { should_not have_link("Edit") }
     end
   end
+  
+  describe "edit request page" do
+    let(:new_name) { "New Name" }
+    let(:new_request_text) { "Give me my records" }
+    before { visit edit_request_path(request) }
+    
+    it { should have_selector('title', text: "Editing request") }
+    
+    context "with valid information" do
+      before do
+        fill_in "Recipient name", with: new_name
+        fill_in "Request text",   with: new_request_text
+        click_button "Save changes"
+      end
+
+      it { should have_selector('title', text: "Request") }
+      it { should have_selector('div.alert.alert-notice', text: "Request was successfully updated") }
+      specify { request.reload.recipient_name.should == new_name }
+      specify { request.reload.request_text.should == new_request_text }
+    end
+    
+    context "with invalid information" do
+      before do
+        fill_in "Recipient name", with: " "
+        click_button "Save changes"
+      end
+    
+      it { should have_selector('title', text: "Editing request") }
+      it { should have_xpath('//div[@class="field_with_errors"]/label[@for="request_recipient_name"]') }
+    end
+  end
 end
