@@ -11,7 +11,7 @@ describe "Request pages" do
   end
   subject { page }
   
-  describe "request index page" do
+  describe "index page" do
     let!(:other_user)   { FactoryGirl.create(:user) }
     let!(:other_user_request) { FactoryGirl.create(:request, user: other_user) }
     before { visit requests_path }
@@ -25,7 +25,7 @@ describe "Request pages" do
     end
   end
   
-  describe "new_request_page" do
+  describe "new page" do
     before do
       @new_request = FactoryGirl.attributes_for(:request, user: user)
        visit new_request_path
@@ -41,12 +41,25 @@ describe "Request pages" do
      
      it { should have_selector('title', text: "New request") }
      it { should have_selector('h1', text: "New request") }
-     it "should create a new request" do
-       expect { click_button "Create new request" }.to change(Request, :count).by(1)
+     
+     context "with valid information" do
+       it "should create a new request" do
+         expect { click_button "Create new request" }.to change(Request, :count).by(1)
+       end
+     end
+     
+     context "with invalid information" do
+       before do
+         fill_in "Recipient name", with: " "
+         click_button "Create new request"
+       end
+       
+       it { should have_selector('title', text: "New request") }
+       it { should have_xpath('//div[@class="field_with_errors"]/label[@for="request_recipient_name"]') }
      end
   end
     
-  describe "show request page" do
+  describe "show page" do
     before { visit request_path(request) }
     
     it { should have_selector('title', text: "Request") }
@@ -71,7 +84,7 @@ describe "Request pages" do
     end
   end
   
-  describe "edit request page" do
+  describe "edit page" do
     let(:new_name) { "New Name" }
     let(:new_request_text) { "Give me my records" }
     before { visit edit_request_path(request) }
