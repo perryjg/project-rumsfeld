@@ -19,4 +19,7 @@
 	<%= @request.recipient_state %>
 	<%= @request.recipient_zip %>
 </p>
-<p><%= @request.request_text %></p>
+<p>
+	<b>Request description:</b><br/>
+	<%= sanitize(RedCloth.new(@request.request_text).to_html) %>
+</p>

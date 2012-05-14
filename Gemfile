@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.3'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'RedCloth'
 
 group :development do
 	gem 'sqlite3'
