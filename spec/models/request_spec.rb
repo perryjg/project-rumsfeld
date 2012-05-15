@@ -36,6 +36,7 @@ describe Request do
 	it { should respond_to(:request_text) }
 	it { should respond_to(:user_id) }
 	it { should respond_to(:request_type_id) }
+	it { should respond_to(:request_type) }
 
 	it { should be_valid }
 
