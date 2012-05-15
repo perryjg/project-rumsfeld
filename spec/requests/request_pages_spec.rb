@@ -84,12 +84,11 @@ describe "Request pages" do
     end
 
     context "when request text uses markup formatting" do
-      pending "should convert markup to html" do
-        let(:request_with_markup) { FactoryGirl.create(:request, request_text: "*My documents*")}
-        before { visit request_path(request) }
+      let!(:request_with_markup) { FactoryGirl.create(:request, request_text: "h3. Documents") }
+      before { visit request_path(request_with_markup) }
 
-        it { should have_selector('strong') }
-      end
+      it { should have_selector('h3', text: "Documents") }
+#      it { should have_content('Documents') }
     end
   end
   
