@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: requests
+#
+#  id                     :integer         not null, primary key
+#  recipient_name         :string(255)
+#  recipient_title        :string(255)
+#  recipient_organization :string(255)
+#  recipient_addr         :string(255)
+#  recipient_city         :string(255)
+#  recipient_state        :string(255)
+#  recipient_zip          :string(255)
+#  request_text           :text
+#  user_id                :integer
+#  request_type_id        :integer
+#  created_at             :datetime        not null
+#  updated_at             :datetime        not null
+#
+
 require 'spec_helper'
 
 describe Request do

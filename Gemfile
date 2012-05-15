@@ -7,7 +7,7 @@ gem 'RedCloth'
 
 group :development do
 	gem 'sqlite3'
-	gem 'annotate'
+	gem 'annotate', git: 'git://github.com/ctran/annotate_models.git'
 end
 
 group :development, :test do
