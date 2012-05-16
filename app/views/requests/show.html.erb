@@ -35,6 +35,6 @@
 </p>
 
 <p>
-	<%= sanitize(liquidize(@request.request_type.template, 'request' => @request)) %>
+	<%= sanitize(RedCloth.new(@request.letter).to_html) %>
 </p>
 

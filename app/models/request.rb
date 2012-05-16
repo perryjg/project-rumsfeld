@@ -15,6 +15,7 @@
 #  request_type_id        :integer
 #  created_at             :datetime        not null
 #  updated_at             :datetime        not null
+#  letter                 :text
 #
 
 class Request < ActiveRecord::Base
@@ -23,14 +24,20 @@ class Request < ActiveRecord::Base
   attr_accessible :recipient_addr, :recipient_city, :recipient_name,
                   :recipient_organization, :recipient_state,
                   :recipient_title, :request_type_id, :recipient_zip,
-                  :request_text
+                  :request_text, :letter
                   
   liquid_methods :recipient_name, :recipient_title, :recipient_organization,
                  :recipient_addr, :recipient_city, :recipient_state,
                  :recipient_zip, :request_text, :created_at, :user_name,
                  :user_email, :user_phone, :user_title, :user_organization,
                  :user_address, :user_city, :user_state, :user_zip
-  
+
+  before_save do |request|
+    if request.request_type_id_changed?
+      request.letter =  Liquid::Template.parse(request.template).render('request' => request)
+    end
+  end
+
   validates :user_id,         presence: true
   validates :recipient_name,  presence: true
   validates :recipient_addr,  presence: true

@@ -15,6 +15,7 @@
 #  request_type_id        :integer
 #  created_at             :datetime        not null
 #  updated_at             :datetime        not null
+#  letter                 :text
 #
 
 require 'spec_helper'
@@ -37,6 +38,7 @@ describe Request do
 	it { should respond_to(:user_id) }
 	it { should respond_to(:request_type_id) }
 	it { should respond_to(:request_type) }
+	it { should respond_to(:letter) }
 
 	it { should be_valid }
 

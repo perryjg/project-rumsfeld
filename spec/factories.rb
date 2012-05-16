@@ -28,8 +28,8 @@ FactoryGirl.define do
     request_type
   end
 
-  factory :request_type do |f|
-    f.name "Generic"
-    f.template 'Hey *{{request.recipient_name}}*, give me some records'
+  factory :request_type do
+    name     "Generic"
+    template 'Hey *{{request.recipient_name}}*, give me some records'
   end
 end
