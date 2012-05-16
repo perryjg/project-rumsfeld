@@ -26,6 +26,9 @@
       <%= f.label :recipient_zip %>
       <%= f.text_field :recipient_zip %>
 
+      <%= f.label :request_type_id %>
+      <%= f.collection_select :request_type_id, RequestType.all, :id, :name %>
+
       <%= f.label :request_text %>
       <%= f.text_area :request_text, class: "input-small", style: "width: 465px", rows: "5" %>
       <div class="form-action">

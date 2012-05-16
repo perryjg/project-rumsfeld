@@ -4,6 +4,7 @@ gem 'rails', '3.2.3'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'RedCloth'
+gem 'liquid'
 
 group :development do
 	gem 'sqlite3'
