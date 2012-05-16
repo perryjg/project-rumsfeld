@@ -26,7 +26,10 @@ class Request < ActiveRecord::Base
                   :request_text
                   
   liquid_methods :recipient_name, :recipient_title, :recipient_organization,
-                 :request_text, :created_at, :user_name
+                 :recipient_addr, :recipient_city, :recipient_state,
+                 :recipient_zip, :request_text, :created_at, :user_name,
+                 :user_email, :user_phone, :user_title, :user_organization,
+                 :user_address, :user_city, :user_state, :user_zip
   
   validates :user_id,         presence: true
   validates :recipient_name,  presence: true

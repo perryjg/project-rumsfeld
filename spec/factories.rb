@@ -29,7 +29,7 @@ FactoryGirl.define do
   end
 
   factory :request_type do |f|
-    f.name 'my letter'
-    f.template 'Hey *{{recipient_name}}*, give me some records'
+    f.name "Generic"
+    f.template 'Hey *{{request.recipient_name}}*, give me some records'
   end
 end

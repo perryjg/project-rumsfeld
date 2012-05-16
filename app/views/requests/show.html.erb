@@ -1,7 +1,7 @@
 <% provide(:title, "Request") %>
 
 <% if @request.user == current_user %>
-	<p><%= link_to 'Edit', edit_request_path(@request), class: "btn" %></p>
+	<p><%= link_to 'Edit', edit_request_path(@request), class: "btn btn-mini" %></p>
 <% end %>
 
 <p><b>Requested by:</b> <%= @request.user.name %>, <%= @request.user.organization %></p>
@@ -25,6 +25,15 @@
 	<%= sanitize(RedCloth.new(@request.request_text).to_html) %>
 </p>
 <hr/>
+
+<p>
+	<% if @request.user == current_user %>
+		<%= link_to "Edit letter",  "#", class: "btn btn-mini" %>
+	<% end %>
+	
+	<%= link_to "Print letter", "#", class: "btn btn-mini" %>
+</p>
+
 <p>
 	<%= sanitize(liquidize(@request.request_type.template, 'request' => @request)) %>
 </p>
