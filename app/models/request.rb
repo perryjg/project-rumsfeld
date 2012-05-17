@@ -19,6 +19,7 @@
 #
 
 class Request < ActiveRecord::Base
+  before_create :generate_letter
 	belongs_to :user
 	belongs_to :request_type
   attr_accessible :recipient_addr, :recipient_city, :recipient_name,
@@ -31,12 +32,6 @@ class Request < ActiveRecord::Base
                  :recipient_zip, :request_text, :created_at, :user_name,
                  :user_email, :user_phone, :user_title, :user_organization,
                  :user_address, :user_city, :user_state, :user_zip
-
-  before_save do |request|
-    if request.request_type_id_changed?
-      request.letter =  Liquid::Template.parse(request.template).render('request' => request)
-    end
-  end
 
   validates :user_id,         presence: true
   validates :recipient_name,  presence: true
@@ -51,4 +46,8 @@ class Request < ActiveRecord::Base
   delegate :name, :email, :phone, :title, :organization,
            :address, :city, :state, :zip,
            to: :user, prefix: true
+
+  def generate_letter
+    self.letter =  Liquid::Template.parse(template).render('request' => self)
+  end
 end
