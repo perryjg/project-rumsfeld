@@ -41,6 +41,7 @@ describe Request do
 	it { should respond_to(:request_type) }
 	it { should respond_to(:letter) }
 	it { should respond_to(:template) }
+	it { should respond_to(:generate_letter) }
 
 	it { should be_valid }
 
@@ -80,10 +81,18 @@ describe Request do
 	end
 	
   describe "letter" do
-    it "should be create with save" do
-      @request.save
-      saved_request = Request.find(1)
-      saved_request.letter.should include(@request.recipient_name)
+  	context "before save" do
+  		it "should be nill" do
+	  		@request.letter.should == nil
+	  	end
+  	end
+
+  	context "after save" do
+  		it "should be generated with template variables" do
+	      @request.save
+	      saved_request = Request.find(@request.id)
+	      saved_request.letter.should include(@request.recipient_name)
+	    end
     end
   end
 
