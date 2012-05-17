@@ -122,4 +122,19 @@ describe "Request pages" do
       it { should have_xpath('//div[@class="field_with_errors"]/label[@for="request_recipient_name"]') }
     end
   end
+  
+  describe "edit letter page" do
+    let(:new_letter) { "Dear Mindless Bureaucrat, give me your records"}
+    before do
+      visit request_editletter_path(request)
+      fill_in "Letter", with: new_letter
+    end
+    
+    it { should have_selector('title', text: "Editing letter") }
+    
+    context "when click Save changes" do
+      before { click_button "Save changes" }
+      specify { request.reload.letter.should == new_letter }
+    end
+  end
 end

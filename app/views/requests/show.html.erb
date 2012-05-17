@@ -28,7 +28,7 @@
 
 <p>
 	<% if @request.user == current_user %>
-		<%= link_to "Edit letter",  "#", class: "btn btn-mini" %>
+		<%= link_to "Edit letter",  request_editletter_path(@request), class: "btn btn-mini" %>
 	<% end %>
 	
 	<%= link_to "Print letter", "#", class: "btn btn-mini" %>

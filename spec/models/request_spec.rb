@@ -22,8 +22,9 @@ require 'spec_helper'
 
 describe Request do
   before do
-    @user = FactoryGirl.create(:user)
-    @request = FactoryGirl.build(:request, user: @user)
+    @user     = FactoryGirl.create(:user)
+    @template = FactoryGirl.create(:request_type)
+    @request  = FactoryGirl.build(:request, user: @user, request_type: @template)
   end
 	subject { @request }
 
@@ -39,6 +40,7 @@ describe Request do
 	it { should respond_to(:request_type_id) }
 	it { should respond_to(:request_type) }
 	it { should respond_to(:letter) }
+	it { should respond_to(:template) }
 
 	it { should be_valid }
 
@@ -77,6 +79,14 @@ describe Request do
 		it { should_not be_valid }
 	end
 	
+  describe "letter" do
+    it "should be create with save" do
+      @request.save
+      saved_request = Request.find(1)
+      saved_request.letter.should include(@request.recipient_name)
+    end
+  end
+
 	describe "User association" do
 	  it { should respond_to(:user) }
 	  its(:user) { should == @user }
