@@ -87,4 +87,9 @@ class RequestsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def edit_letter
+    @user = current_user
+    @request = @user.requests.find(params[:id])
+  end
 end

@@ -11,31 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509152638) do
+ActiveRecord::Schema.define(:version => 20120516201153) do
 
   create_table "letters", :force => true do |t|
-    t.string   "sender"
-    t.string   "sender_title"
-    t.string   "sender_organization"
-    t.string   "sender_email"
-    t.string   "recipient"
-    t.string   "email"
-    t.string   "title"
-    t.string   "organization"
-    t.string   "address"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
-    t.text     "final_text"
-    t.integer  "user_id"
-    t.integer  "request_type_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.text     "request_text"
+    t.integer  "request_id"
+    t.text     "letter_text"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
-
-  add_index "letters", ["request_type_id"], :name => "index_letters_on_request_type_id"
-  add_index "letters", ["user_id"], :name => "index_letters_on_user_id"
 
   create_table "request_types", :force => true do |t|
     t.string   "name"
@@ -57,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20120509152638) do
     t.integer  "request_type_id"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.text     "letter"
   end
 
   create_table "users", :force => true do |t|

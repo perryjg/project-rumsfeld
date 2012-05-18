@@ -28,15 +28,15 @@ describe "Request pages" do
   describe "new page" do
     before do
       @new_request = FactoryGirl.attributes_for(:request, user: user)
-       visit new_request_path
-       fill_in "Recipient name",         with: @new_request[:recipient_name]
-       fill_in "Recipient title",        with: @new_request[:recipient_title]
-       fill_in "Recipient organization", with: @new_request[:recipient_organization]
-       fill_in "Recipient addr",         with: @new_request[:recipient_addr]
-       fill_in "Recipient city",         with: @new_request[:recipient_city]
-       fill_in "Recipient state",        with: @new_request[:recipient_state]
-       fill_in "Recipient zip",          with: @new_request[:recipient_zip]
-       fill_in "Request text",           with: @new_request[:request_text]
+      visit new_request_path
+      fill_in "Recipient name",         with: @new_request[:recipient_name]
+      fill_in "Recipient title",        with: @new_request[:recipient_title]
+      fill_in "Recipient organization", with: @new_request[:recipient_organization]
+      fill_in "Recipient addr",         with: @new_request[:recipient_addr]
+      fill_in "Recipient city",         with: @new_request[:recipient_city]
+      fill_in "Recipient state",        with: @new_request[:recipient_state]
+      fill_in "Recipient zip",          with: @new_request[:recipient_zip]
+      fill_in "Request text",           with: @new_request[:request_text]
      end
      
      it { should have_selector('title', text: "New request") }
@@ -120,6 +120,21 @@ describe "Request pages" do
     
       it { should have_selector('title', text: "Editing request") }
       it { should have_xpath('//div[@class="field_with_errors"]/label[@for="request_recipient_name"]') }
+    end
+  end
+  
+  describe "edit letter page" do
+    let(:new_letter) { "Dear Mindless Bureaucrat, give me your records"}
+    before do
+      visit request_editletter_path(request)
+      fill_in "Letter", with: new_letter
+    end
+    
+    it { should have_selector('title', text: "Editing letter") }
+    
+    context "when click Save changes" do
+      before { click_button "Save changes" }
+      specify { request.reload.letter.should == new_letter }
     end
   end
 end

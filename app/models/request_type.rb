@@ -10,4 +10,9 @@
 #
 
 class RequestType < ActiveRecord::Base
+	has_many :requests
+	attr_accessible :name, :template
+
+	validates :name,     presence: true
+	validates :template, presence: true
 end

@@ -60,8 +60,23 @@ describe 'Static Pages' do
 		end
 		
 		context "when user not signed in" do
-		  it { should_not have_link('Sign out') }
-		  it { should_not have_link('Requests') }
+		  it { should_not have_link('Sign out',  href: signout_path) }
+		  it { should_not have_link('Requests',  href: requests_path) }
+		  it { should_not have_link("Templates", href: request_types_path) }
+	  end
+
+	  context "when user is signed in" do
+	  	let!(:user) {FactoryGirl.create(:user) }
+		  before do
+		    visit signin_path
+		    fill_in 'Email',    with: user.email
+		    fill_in 'Password', with: user.password
+		    click_button 'Sign in'
+		  end
+
+		  it { should have_link('Sign out',  href: signout_path) }
+		  it { should have_link('Requests',  href: requests_path) }
+		  it { should have_link("Templates", href: request_types_path) }
 	  end
 	end
 end

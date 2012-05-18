@@ -1,0 +1,26 @@
+<%= provide(:title, "Editing letter") %>
+<h1>Editing letter</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@request) do |f| %>
+    <%= render 'shared/error_messages' %>
+
+      <%= f.hidden_field :recipient_name %>
+      <%= f.hidden_field :recipient_title %>
+      <%= f.hidden_field :recipient_organization %>
+      <%= f.hidden_field :recipient_addr %>
+      <%= f.hidden_field :recipient_city %>
+      <%= f.hidden_field :recipient_state %>
+      <%= f.hidden_field :recipient_zip %>
+      <%= f.hidden_field :request_type_id %>
+      <%= f.hidden_field :request_text %>
+
+      <%= f.label :letter %>
+      <%= f.text_area :letter %>
+
+      <div class="form-action">
+	      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+	    </div>
+    <% end %>
+  </div>
+</div>
