@@ -3,6 +3,7 @@ Rumsfeld::Application.routes.draw do
   
   resources :letters
   resources :users
+  resources :requests
   resources :request_types
   resources :sessions, only: [:new, :create, :destroy]
   

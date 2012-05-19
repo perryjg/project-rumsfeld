@@ -17,6 +17,7 @@
 #
 
 class User < ActiveRecord::Base
+	has_many :requests, dependent: :destroy
 	has_secure_password
 	attr_accessible :name, :email, :phone, :title, :organization, :address,
 	                :city, :state, :zip, :password, :password_confirmation

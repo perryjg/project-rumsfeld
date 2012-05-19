@@ -1,0 +1,20 @@
+<%= provide(:title, "Requests") %>
+<h1>Requests</h1>
+
+<p>
+	<%= link_to 'New Request', new_request_path, class: "btn btn-small btn-primary active" %>
+</p>
+<table width="80%" class="table table-condensed">
+<% @requests.each do |request| %>
+  <tr>
+	  <td><%= request.user.name %></td>
+	  <td><%= request.recipient_organization %></td>
+	  <td><%= request.created_at.strftime("%B %d, %Y") %></td>
+    <td><%= truncate(request.request_text, length: 50) %></td>
+    <td><%= link_to 'Show', request %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

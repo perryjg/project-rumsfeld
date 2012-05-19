@@ -19,11 +19,7 @@
 require 'spec_helper'
 
 describe User do
-	before { @user = User.new(name: 'Joe Reporter', email: 'foo@bar.com',
-		                       phone: '555-555-5555', title: 'Reporter',
-		                       organization: 'The news', address: '123 Main St',
-		                       city: 'Atlnata', state: 'GA', zip: '33333',
-		                       password: 'foobar', password_confirmation: 'foobar') }
+	before { @user = FactoryGirl.build(:user) }
 
 	subject { @user }
 
@@ -40,6 +36,7 @@ describe User do
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
 	it { should respond_to(:authenticate) }
+	it { should respond_to(:requests) }
 
 	it { should be_valid }
 
@@ -116,6 +113,30 @@ describe User do
 
       it { should_not == user_for_invalid_password }
       specify { user_for_invalid_password.should be_false }
+    end
+  end
+  
+  describe "request associations" do
+    before { @user.save }
+    let!(:older_request) do
+      FactoryGirl.create(:request, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_request) do
+      FactoryGirl.create(:request, user: @user, created_at: 1.hour.ago)
+    end
+    
+    it " should have the right requests in the right order" do
+      @user.requests.should == [newer_request, older_request]
+    end
+    
+    it "should destroy associated requests" do
+      requests = @user.requests
+      @user.destroy
+      requests.each do | request|
+        expect do
+          Request.find(request.id)
+        end.should raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end

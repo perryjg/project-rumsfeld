@@ -1,0 +1,22 @@
+<% provide(:title, "Request") %>
+<p id="notice"><%= notice %></p>
+
+<% if @request.user == current_user %>
+	<p><%= link_to 'Edit', edit_request_path(@request), class: "btn" %></p>
+<% end %>
+
+<p><b>Requested by:</b> <%= @request.user.name %>, <%= @request.user.organization %></p>
+<p>
+	<b>Requested sent to:</b>
+	<%= @request.recipient_name %>,
+	<%= @request.recipient_title %>,
+	<%= @request.recipient_organization %>
+</p>
+<p>
+	<b>Address:</b>
+	<%= @request.recipient_addr %>,
+	<%= @request.recipient_city %>,
+	<%= @request.recipient_state %>
+	<%= @request.recipient_zip %>
+</p>
+<p><%= @request.request_text %></p>
