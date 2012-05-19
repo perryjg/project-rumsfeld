@@ -25,5 +25,11 @@ FactoryGirl.define do
   	recipient_zip          { Faker::Address.zip_code }
   	request_text 'All your records are belong to us'
   	user
+    request_type
+  end
+
+  factory :request_type do
+    name     "Generic"
+    template 'Hey *{{request.recipient_name}}*, give me some records'
   end
 end

@@ -2,18 +2,19 @@
 #
 # Table name: users
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)
-#  email        :string(255)
-#  phone        :string(255)
-#  title        :string(255)
-#  organization :string(255)
-#  address      :string(255)
-#  city         :string(255)
-#  state        :string(255)
-#  zip          :string(255)
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
+#  id              :integer         not null, primary key
+#  name            :string(255)
+#  email           :string(255)
+#  phone           :string(255)
+#  title           :string(255)
+#  organization    :string(255)
+#  address         :string(255)
+#  city            :string(255)
+#  state           :string(255)
+#  zip             :string(255)
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  password_digest :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -22,6 +23,9 @@ class User < ActiveRecord::Base
 	attr_accessible :name, :email, :phone, :title, :organization, :address,
 	                :city, :state, :zip, :password, :password_confirmation
 
+	liquid_methods :name, :email, :phone, :title, :organization, :address,
+                 :city, :state, :zip
+  
 	before_save { |user| user.email = email.downcase }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

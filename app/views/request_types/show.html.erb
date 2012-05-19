@@ -1,15 +1,12 @@
+<% provide(:title, "#{@request_type.name} template") %>
 <p id="notice"><%= notice %></p>
 
+<h1><%= @request_type.name %> Template</h1>
+
 <p>
-  <b>Name:</b>
-  <%= @request_type.name %>
+<%= link_to 'Edit', edit_request_type_path(@request_type), class: "btn btn-primary btn-mini active" %>
 </p>
 
 <p>
-  <b>Template:</b>
-  <%= @request_type.template %>
+  <%= sanitize(RedCloth.new(@request_type.template).to_html) %>
 </p>
-
-
-<%= link_to 'Edit', edit_request_type_path(@request_type) %> |
-<%= link_to 'Back', request_types_path %>

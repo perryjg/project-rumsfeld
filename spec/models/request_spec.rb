@@ -1,9 +1,30 @@
+# == Schema Information
+#
+# Table name: requests
+#
+#  id                     :integer         not null, primary key
+#  recipient_name         :string(255)
+#  recipient_title        :string(255)
+#  recipient_organization :string(255)
+#  recipient_addr         :string(255)
+#  recipient_city         :string(255)
+#  recipient_state        :string(255)
+#  recipient_zip          :string(255)
+#  request_text           :text
+#  user_id                :integer
+#  request_type_id        :integer
+#  created_at             :datetime        not null
+#  updated_at             :datetime        not null
+#  letter                 :text
+#
+
 require 'spec_helper'
 
 describe Request do
   before do
-    @user = FactoryGirl.create(:user)
-    @request = FactoryGirl.build(:request, user: @user)
+    @user     = FactoryGirl.create(:user)
+    @template = FactoryGirl.create(:request_type)
+    @request  = FactoryGirl.build(:request, user: @user, request_type: @template)
   end
 	subject { @request }
 
@@ -17,6 +38,10 @@ describe Request do
 	it { should respond_to(:request_text) }
 	it { should respond_to(:user_id) }
 	it { should respond_to(:request_type_id) }
+	it { should respond_to(:request_type) }
+	it { should respond_to(:letter) }
+	it { should respond_to(:template) }
+	it { should respond_to(:generate_letter) }
 
 	it { should be_valid }
 
@@ -55,6 +80,22 @@ describe Request do
 		it { should_not be_valid }
 	end
 	
+  describe "letter" do
+  	context "before save" do
+  		it "should be nill" do
+	  		@request.letter.should == nil
+	  	end
+  	end
+
+  	context "after save" do
+  		it "should be generated with template variables" do
+	      @request.save
+	      saved_request = Request.find(@request.id)
+	      saved_request.letter.should include(@request.recipient_name)
+	    end
+    end
+  end
+
 	describe "User association" do
 	  it { should respond_to(:user) }
 	  its(:user) { should == @user }

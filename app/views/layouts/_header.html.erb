@@ -5,8 +5,9 @@
       <nav>
         <ul class="nav pull-right">
           <% if current_user %>
-            <li><%= link_to "Home", user_path(current_user) %></li>
-            <li><%= link_to 'Requests', requests_path %></li>
+            <li><%= link_to "Home",      user_path(current_user) %></li>
+            <li><%= link_to 'Requests',  requests_path %></li>
+            <li><%= link_to 'Templates', request_types_path %></li>
         <% else %>
             <li><%= link_to "Home", root_path %></li>
           <% end %>

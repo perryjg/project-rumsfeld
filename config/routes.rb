@@ -13,6 +13,8 @@ Rumsfeld::Application.routes.draw do
   match '/signup',  to: "users#new"
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy'
+  
+  match '/requests/:id/editletter', to: 'requests#edit_letter', as: "request_editletter", via: "get"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
