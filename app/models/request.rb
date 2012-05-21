@@ -20,8 +20,11 @@
 
 class Request < ActiveRecord::Base
   before_create :generate_letter
+  after_create  :status_pending
+
 	belongs_to :user
 	belongs_to :request_type
+  has_many :statuses
   attr_accessible :recipient_addr, :recipient_city, :recipient_name,
                   :recipient_organization, :recipient_state,
                   :recipient_title, :request_type_id, :recipient_zip,
@@ -50,4 +53,14 @@ class Request < ActiveRecord::Base
   def generate_letter
     self.letter =  Liquid::Template.parse(template).render('request' => self)
   end
+
+  def current_status
+    statuses.first
+  end
+
+  protected
+
+    def status_pending
+      statuses.create( status: "pending" )
+    end
 end
