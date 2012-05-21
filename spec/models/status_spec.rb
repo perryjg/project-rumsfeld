@@ -24,9 +24,9 @@ describe Status do
 
 	it "should return statuses in the right order" do
 		old_status = FactoryGirl.create(:status, request: request, created_at: 1.day.ago)
-		new_status = FactoryGirl.create(:status, request: request, created_at: 1.hour.ago)
+		new_status = FactoryGirl.create(:status, request: request)
 
-		request.statuses.should == [new_status, old_status]
+		request.statuses.first.should == new_status
 	end
 
 	describe "accessible attruibutes" do

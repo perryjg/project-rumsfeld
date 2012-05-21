@@ -23,6 +23,10 @@ describe "Request pages" do
       it { should have_content(request.user.name) }
       it { should have_content(other_user_request.user.name) }
     end
+
+    context "should list requests' current status" do
+      it { should have_content(request.current_status.status) }
+    end
   end
   
   describe "new page" do

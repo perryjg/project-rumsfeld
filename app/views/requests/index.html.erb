@@ -11,6 +11,7 @@
 	  <td><%= request.recipient_organization %></td>
 	  <td><%= request.created_at.strftime("%B %d, %Y") %></td>
     <td><%= truncate(request.request_text, length: 50) %></td>
+	  <td><%= request.current_status.status %></td>
     <td><%= link_to 'Show', request %></td>
   </tr>
 <% end %>
