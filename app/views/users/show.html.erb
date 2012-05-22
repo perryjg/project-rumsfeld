@@ -72,8 +72,9 @@
 	    <% if @user.requests.any? %>
       <% @user.requests.each do |request| %>
       <tr>
+        <td><%= request.current_status.status %></td>
         <td><%= request.recipient_organization %></td>
-        <td><%= request.created_at.strftime("%a, %B %d, %Y") %></td>
+        <td><%= request.created_at.strftime("%B %d, %Y") %></td>
         <td><%= truncate(request.request_text, length: 50) %></td>
         <td><%= link_to 'Show', request_path(request), class: "btn btn-mini btn-primary active"%></td>
         <td><%= link_to 'Edit', edit_request_path(request), class: "btn btn-mini btn-primary active"%></td>
