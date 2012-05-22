@@ -1,0 +1,18 @@
+<%= provide(:title, 'Update status') %>
+<h1>Update status</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for([@request,@status]) do |f| %>
+			<%= render 'shared/error_messages' %>
+
+	    <%= f.label :status_event_id, "Status" %><br />
+	    <%= f.collection_select :status_event_id,
+	                            StatusEvent.order(:id),
+	                            :id, :status_name,
+	                            include_blank: true, %>
+
+      <%= f.submit "Update status", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

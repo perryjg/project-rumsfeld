@@ -29,8 +29,8 @@ describe "User pages" do
 		  it { should have_content(request1.recipient_organization) }
 		  it { should have_content(request2.recipient_organization) }
 		  
-		  it { should have_link('Show', href: request_path(request1)) }
-		  it { should have_link('Show', href: request_path(request2)) }
+		  it { should have_link("#{request1.id}", href: request_path(request1)) }
+		  it { should have_link("#{request2.id}", href: request_path(request2)) }
 		  
 		  it { should have_link('Edit', href: edit_request_path(request1)) }
 		  it { should have_link('Edit', href: edit_request_path(request2)) }

@@ -1,40 +1,62 @@
 <% provide(:title, "Request") %>
+<div class="row">
+	<div class="span5">
+		<% if @request.user == current_user %>
+			<p><%= link_to 'Edit', edit_request_path(@request), class: "btn btn-mini" %></p>
+		<% end %>
 
-<% if @request.user == current_user %>
-	<p><%= link_to 'Edit', edit_request_path(@request), class: "btn btn-mini" %></p>
-<% end %>
+		<p><b>Requested by:</b> <%= @request.user.name %>, <%= @request.user.organization %></p>
+		<p>
+			<b>Requested sent to:</b>
+			<%= @request.recipient_name %>,
+			<%= @request.recipient_title %>,
+			<%= @request.recipient_organization %>
+		</p>
+		<p>
+			<b>Address:</b>
+			<%= @request.recipient_addr %>,
+			<%= @request.recipient_city %>,
+			<%= @request.recipient_state %>
+			<%= @request.recipient_zip %>
+		</p>
+		<p>
+			<b>Request type:</b> <%= @request.request_type.name %>
+		<p>
+			<b>Request description:</b><br/>
+			<%= sanitize(RedCloth.new(@request.request_text).to_html) %>
+		</p>
+	</div>
 
-<p><b>Requested by:</b> <%= @request.user.name %>, <%= @request.user.organization %></p>
-<p>
-	<b>Requested sent to:</b>
-	<%= @request.recipient_name %>,
-	<%= @request.recipient_title %>,
-	<%= @request.recipient_organization %>
-</p>
-<p>
-	<b>Address:</b>
-	<%= @request.recipient_addr %>,
-	<%= @request.recipient_city %>,
-	<%= @request.recipient_state %>
-	<%= @request.recipient_zip %>
-</p>
-<p>
-	<b>Request type:</b> <%= @request.request_type.name %>
-<p>
-	<b>Request description:</b><br/>
-	<%= sanitize(RedCloth.new(@request.request_text).to_html) %>
-</p>
-<hr/>
+	<div class="span6 offset1">
+		<h3>Current status: <%= @request.current_status.status %></h3>
+		<%= @request.current_status.created_at.strftime("%B %d, %Y") %>
 
-<p>
-	<% if @request.user == current_user %>
-		<%= link_to "Edit letter",  request_editletter_path(@request), class: "btn btn-mini" %>
-	<% end %>
-	
-	<%= link_to "Print letter", "#", class: "btn btn-mini" %>
-</p>
+		<p>
+			<b>Status History</b>
+		</p>
+		<ul>
+			<% @request.statuses.each do |status| %>
+				<li><%= status.status %> (<%= status.created_at.strftime("%B %d, %Y") %>)</li>
+			<% end %>
+			</ul>
+	</div>
+</div>
 
-<p>
-	<%= sanitize(RedCloth.new(@request.letter).to_html) %>
-</p>
+<div class="row"><hr/></div>
 
+<div class="row">
+	<div class="span8 offset2">
+
+		<p>
+			<% if @request.user == current_user %>
+				<%= link_to "Edit letter",  request_editletter_path(@request), class: "btn btn-mini" %>
+			<% end %>
+			
+			<%= link_to "Print letter", "#", class: "btn btn-mini" %>
+		</p>
+
+		<p>
+			<%= sanitize(RedCloth.new(@request.letter).to_html) %>
+		</p>
+	</div>
+</div>
