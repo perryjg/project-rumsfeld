@@ -116,6 +116,7 @@ describe Request do
   end
 
   describe "status association" do
+  	let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'pending') }
   	before { request.save }
 
 		it "should be 'pending' upon save" do

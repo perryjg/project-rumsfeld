@@ -11,9 +11,10 @@ describe "User pages" do
 	end
 
 	describe "user home page" do
-    let!(:user)     { FactoryGirl.create(:user) }
-    let!(:request1) { FactoryGirl.create(:request, user: user) }
-    let!(:request2) { FactoryGirl.create(:request, user: user) }
+    let!(:user)         { FactoryGirl.create(:user) }
+    let!(:status_event) { FactoryGirl.create(:status_event) }
+    let!(:request1)     { FactoryGirl.create(:request, user: user) }
+    let!(:request2)     { FactoryGirl.create(:request, user: user) }
     before do
       visit signin_path
       fill_in 'Email', with: user.email

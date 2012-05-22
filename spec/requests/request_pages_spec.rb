@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe "Request pages" do
-  let!(:user)    { FactoryGirl.create(:user) }
-  let!(:request) { FactoryGirl.create(:request, user: user) }
+  let!(:user)         { FactoryGirl.create(:user) }
+  let!(:status_event) { FactoryGirl.create(:status_event) }
+  let!(:request)      { FactoryGirl.create(:request, user: user) }
   before do
     visit signin_path
     fill_in 'Email',    with: user.email

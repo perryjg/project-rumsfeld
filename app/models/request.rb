@@ -61,6 +61,6 @@ class Request < ActiveRecord::Base
   protected
 
     def status_pending
-      statuses.create( status: "pending" )
+      statuses.create( status_event_id: 1 )
     end
 end
