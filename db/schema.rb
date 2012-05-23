@@ -13,6 +13,13 @@
 
 ActiveRecord::Schema.define(:version => 20120522190637) do
 
+  create_table "letters", :force => true do |t|
+    t.integer  "request_id"
+    t.text     "letter_text"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "request_types", :force => true do |t|
     t.string   "name"
     t.text     "template"
