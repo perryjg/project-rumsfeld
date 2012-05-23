@@ -6,5 +6,8 @@ class CreateRequestTypes < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    template = IO.read("#{Rails.root}/lib/tasks/default_letter_template.txt")
+    RequestType.create name: 'Generic', template: template
   end
 end

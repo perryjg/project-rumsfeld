@@ -7,9 +7,11 @@
 <table width="80%" class="table table-condensed">
 <% @requests.each do |request| %>
   <tr>
+	  <td><%= request.id %></td>
+	  <td><%= request.current_status.status %></td>
+	  <td><%= request.current_status.created_at.strftime("%B %d, %Y") %></td>
 	  <td><%= request.user.name %></td>
 	  <td><%= request.recipient_organization %></td>
-	  <td><%= request.created_at.strftime("%B %d, %Y") %></td>
     <td><%= truncate(request.request_text, length: 50) %></td>
     <td><%= link_to 'Show', request %></td>
   </tr>

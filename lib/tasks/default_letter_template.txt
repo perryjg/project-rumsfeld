@@ -1,0 +1,21 @@
+{{request.recipient_name}}
+{{request.recipient_title}}
+{{request.recipient_organization}}
+{{request.recipient_addr}}
+{{request.recipient_city}}, {{request.recipient_state}} {{request.recipient_zip}}
+
+{{request.created_at | formal_date }}
+
+Re: Public Records Request
+
+Pursuant to the state open records act, this is to respectfully request access to inspect and copy the following public records:
+
+    {{request.request_text}}
+
+I am prepared to pay reasonable fees for search and retrieval of records. However, please notify me if costs are estimated to exceed $25. If my request is denied, in whole or in part, please provide me with the section of your state open records act upon which the denial or redaction is based. Thank you for your attention to this request. Please do not hesitate to contact me at {{user.phone}} or {{user.email}} if you have any questions.
+
+{{request.user_name}}
+{{request.user_title}}
+{{request.user_organization}}
+{{request.user_address}}
+{{request.user_city}}, {{request.user_state}} {{request.user_zip}}

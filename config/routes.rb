@@ -1,9 +1,15 @@
 Rumsfeld::Application.routes.draw do
+  get "statuses/new"
+
+  get "status/new"
+
   root to: "static_pages#home"
   
   resources :letters
   resources :users
-  resources :requests
+  resources :requests do
+    resources :statuses
+  end
   resources :request_types
   resources :sessions, only: [:new, :create, :destroy]
   

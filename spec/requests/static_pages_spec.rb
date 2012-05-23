@@ -67,12 +67,7 @@ describe 'Static Pages' do
 
 	  context "when user is signed in" do
 	  	let!(:user) {FactoryGirl.create(:user) }
-		  before do
-		    visit signin_path
-		    fill_in 'Email',    with: user.email
-		    fill_in 'Password', with: user.password
-		    click_button 'Sign in'
-		  end
+	  	before { sign_in user }
 
 		  it { should have_link('Sign out',  href: signout_path) }
 		  it { should have_link('Requests',  href: requests_path) }
