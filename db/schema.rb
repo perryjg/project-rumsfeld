@@ -11,14 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120522190637) do
-
-  create_table "letters", :force => true do |t|
-    t.integer  "request_id"
-    t.text     "letter_text"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
+ActiveRecord::Schema.define(:version => 20120521182908) do
 
   create_table "request_types", :force => true do |t|
     t.string   "name"
@@ -36,11 +29,11 @@ ActiveRecord::Schema.define(:version => 20120522190637) do
     t.string   "recipient_state"
     t.string   "recipient_zip"
     t.text     "request_text"
+    t.text     "letter"
     t.integer  "user_id"
     t.integer  "request_type_id"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
-    t.text     "letter"
   end
 
   create_table "status_events", :force => true do |t|
@@ -50,10 +43,10 @@ ActiveRecord::Schema.define(:version => 20120522190637) do
   end
 
   create_table "statuses", :force => true do |t|
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
     t.integer  "request_id"
     t.integer  "status_event_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -66,9 +59,9 @@ ActiveRecord::Schema.define(:version => 20120522190637) do
     t.string   "city"
     t.string   "state"
     t.string   "zip"
+    t.string   "password_digest"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.string   "password_digest"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

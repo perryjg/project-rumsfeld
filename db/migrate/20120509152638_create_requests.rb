@@ -8,7 +8,8 @@ class CreateRequests < ActiveRecord::Migration
       t.string :recipient_city
       t.string :recipient_state, length: 2
       t.string :recipient_zip
-      t.text :request_text
+      t.text   :request_text
+      t.text   :letter
       t.integer :user_id
       t.integer :request_type_id
 
