@@ -35,9 +35,9 @@
       <% @user.requests.each do |request| %>
       <tr>
         <td><%= link_to request.id, request_path(request) %></td>
-        <td><%= link_to request.current_status.status,   new_request_status_path(request) %></td>
+        <td><%= link_to request.current_status.status, new_request_status_path(request) %></td>
+        <td><%= request.current_status.created_at.strftime("%B %d, %Y") %></td>
         <td><%= request.recipient_organization %></td>
-        <td><%= request.created_at.strftime("%B %d, %Y") %></td>
         <td><%= truncate(request.request_text, length: 50) %></td>
         <td><%= link_to 'Edit', edit_request_path(request), class: "btn btn-mini btn-primary active"%></td>
       </tr>

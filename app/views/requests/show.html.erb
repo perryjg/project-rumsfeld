@@ -1,6 +1,6 @@
 <% provide(:title, "Request") %>
 <div class="row">
-	<div class="span5">
+	<div class="span4">
 		<% if @request.user == current_user %>
 			<p><%= link_to 'Edit', edit_request_path(@request), class: "btn btn-mini" %></p>
 		<% end %>
@@ -27,10 +27,10 @@
 		</p>
 	</div>
 
-	<div class="span6 offset1">
+	<div class="span7 offset1">
 		<h3>Current status: <%= @request.current_status.status %></h3>
 		<%= @request.current_status.created_at.strftime("%B %d, %Y") %>
-
+    <hr/>
 		<p>
 			<b>Status History</b>
 		</p>
@@ -45,7 +45,7 @@
 <div class="row"><hr/></div>
 
 <div class="row">
-	<div class="span8 offset2">
+	<div class="span8 offset1">
 
 		<p>
 			<% if @request.user == current_user %>

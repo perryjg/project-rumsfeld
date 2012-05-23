@@ -9,8 +9,7 @@
 	    <%= f.label :status_event_id, "Status" %><br />
 	    <%= f.collection_select :status_event_id,
 	                            StatusEvent.order(:id),
-	                            :id, :status_name,
-	                            include_blank: true, %>
+	                            :id, :status_name %>
 
       <%= f.submit "Update status", class: "btn btn-large btn-primary" %>
     <% end %>
