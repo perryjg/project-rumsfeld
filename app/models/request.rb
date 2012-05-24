@@ -62,5 +62,7 @@ class Request < ActiveRecord::Base
 
     def status_pending
       statuses.create( status_event_id: 1 )
+      self.letter =  Liquid::Template.parse(template).render('request' => self)
+      self.save
     end
 end

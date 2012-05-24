@@ -91,6 +91,18 @@ describe "Request pages" do
       it { should have_selector('h3', text: "Documents") }
 #      it { should have_content('Documents') }
     end
+
+    context "when letter template includes a formatted date" do
+      let!(:template_with_date) { FactoryGirl.create(:request_type, template: "DateE {{request.created_at | formal_date }}")}
+      let!(:request_with_date) do
+        FactoryGirl.create(:request, request_type: template_with_date)
+      end
+      before { visit request_path(request_with_date) }
+
+      it "should properly display formatted date" do
+        page.should have_content(request_with_date.created_at.strftime("%a, %B %d, %Y"))
+      end
+    end
   end
   
   describe "edit page" do
