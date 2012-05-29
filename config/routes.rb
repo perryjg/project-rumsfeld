@@ -1,8 +1,4 @@
 Rumsfeld::Application.routes.draw do
-  get "statuses/new"
-
-  get "status/new"
-
   root to: "static_pages#home"
   
   resources :letters
@@ -13,13 +9,14 @@ Rumsfeld::Application.routes.draw do
   resources :request_types
   resources :sessions, only: [:new, :create, :destroy]
   
-  match '/help',    to: "static_pages#help"
-  match '/about',   to: "static_pages#about"
-  match '/contact', to: "static_pages#contact"
-  match '/signup',  to: "users#new"
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy'
-  
+  match '/help',      to: "static_pages#help"
+  match '/about',     to: "static_pages#about"
+  match '/contact',   to: "static_pages#contact"
+  match '/signup',    to: "users#new"
+  match '/signin',    to: 'sessions#new'
+  match '/signout',   to: 'sessions#destroy'
+  match '/print/:id', to: 'print_letters#show', as: 'print'
+
   match '/requests/:id/editletter', to: 'requests#edit_letter', as: "request_editletter", via: "get"
 
   # The priority is based upon order of creation:
