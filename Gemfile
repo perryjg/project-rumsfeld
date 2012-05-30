@@ -7,6 +7,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'RedCloth'
 gem 'liquid'
 gem 'heroku'
+gem 'taps'
 
 group :development do
 	gem 'sqlite3'
@@ -33,10 +34,8 @@ group :test do
 end
 
 group :production do
-	gem 'pg'
+	gem 'mysql2'
 end
-
-# To use ActiveModel has_secure_password
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
