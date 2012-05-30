@@ -8,6 +8,7 @@ gem 'RedCloth'
 gem 'liquid'
 gem 'heroku'
 gem 'taps'
+gem 'mysql2'
 
 group :development do
 	gem 'sqlite3'
