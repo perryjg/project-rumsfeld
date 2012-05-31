@@ -9,6 +9,7 @@ gem 'liquid'
 group :development do
 	gem 'sqlite3'
 	gem 'annotate', git: 'git://github.com/ctran/annotate_models.git'
+	gem 'sextant'
 end
 
 group :development, :test do
