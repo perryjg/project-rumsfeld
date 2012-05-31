@@ -2,6 +2,9 @@
 <h1>New request</h1>
 <div class="row">
   <div class="span6 offset3">
+    <p>
+      <strong>Please enter information as you wish it to appear in your records request letters:</strong>
+    </p>
     <%= form_for(@request) do |f| %>
       <%= f.label :recipient_name %>
       <%= f.text_field :recipient_name %>
@@ -27,7 +30,7 @@
       <%= f.label :request_type_id %>
       <%= f.collection_select :request_type_id, RequestType.all, :id, :name %>
 
-      <%= f.label :request_text %>
+      <%= f.label :request_text, "Description of records you are requesting" %>
       <%= f.text_area :request_text, class: "input-small", style: "width: 465px", rows: "5" %>
       <div class="form-action">
 	      <%= f.submit "Create new request", class: "btn btn-large btn-primary" %>

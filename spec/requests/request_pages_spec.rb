@@ -37,7 +37,7 @@ describe "Request pages" do
       fill_in "Recipient city",         with: @new_request[:recipient_city]
       fill_in "Recipient state",        with: @new_request[:recipient_state]
       fill_in "Recipient zip",          with: @new_request[:recipient_zip]
-      fill_in "Request text",           with: @new_request[:request_text]
+      fill_in "Description of records you are requesting",           with: @new_request[:request_text]
      end
      
      it { should have_selector('title', text: "New request") }
@@ -115,7 +115,7 @@ describe "Request pages" do
     context "with valid information" do
       before do
         fill_in "Recipient name", with: new_name
-        fill_in "Request text",   with: new_request_text
+        fill_in "Description of records you are requesting",   with: new_request_text
         click_button "Save changes"
       end
 
