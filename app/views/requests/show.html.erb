@@ -28,11 +28,14 @@
 	</div>
 
 	<div class="span7 offset1">
-		<h3>Current status: <%= @request.current_status.status %></h3>
-		<%= @request.current_status.created_at.strftime("%B %d, %Y") %>
-    <hr/>
 		<p>
-			<b>Status History</b>
+			<%= link_to "Update status", new_request_status_path(@request), class: "btn btn-mini" %>
+		</p>
+		<p>
+			<strong>Current status:</strong> <%= @request.current_status.status %> (<%= @request.current_status.created_at.strftime("%B %d, %Y") %>)
+ 		</p>
+		<p>
+			<b>Status History:</b>
 		</p>
 		<ul>
 			<% @request.statuses.each do |status| %>
