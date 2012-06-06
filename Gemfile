@@ -6,6 +6,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'RedCloth'
 gem 'liquid'
 gem 'wicked_pdf'
+gem 'business_time'
 
 group :development do
 	gem 'sqlite3'

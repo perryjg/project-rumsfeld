@@ -58,6 +58,11 @@ class Request < ActiveRecord::Base
     statuses.first
   end
 
+  def is_in_violation
+    current_status.status == 'sent' &&
+      3.business_days.after(current_status.created_at.to_date).past?
+  end
+
   protected
 
     def status_pending

@@ -175,6 +175,12 @@ input, textarea, select, .uneditable-input {
 
  p.letter {
   font-size: 12pt;
-  font-family: Georgia, serif;
+  font-family: Georgia, Times New Roman, Times, serif;
   background: none;
+ }
+
+ /* request status list */
+
+ .in_violation {
+  color: red;
  }
