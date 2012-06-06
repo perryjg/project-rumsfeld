@@ -67,5 +67,13 @@ module Rumsfeld
       
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
+
+    config.after_initialize do
+        ActionController::Base.asset_host = Proc.new do |source, request|
+            if request.format == 'pdf'
+                "file://#{Rails.root.join('public')}"
+            end
+        end
+    end
   end
 end
