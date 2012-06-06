@@ -1,0 +1,5 @@
+<div class="row">
+	<div class="span8 offset2 letter">
+		<%= sanitize(RedCloth.new(@request.letter).to_html) %>
+	</div>
+</div>

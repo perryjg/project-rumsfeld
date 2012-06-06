@@ -48,11 +48,14 @@
 	<div class="span8 offset1">
 
 		<p>
-			<% if @request.user == current_user %>
-				<%= link_to "Edit letter",  request_editletter_path(@request), class: "btn btn-mini" %>
-			<% end %>
-			
-			<%= link_to "Print letter", print_path(@request), class: "btn btn-mini" %>
+			<div class="btn-group">
+				<% if @request.user == current_user %>
+					<%= link_to "Edit letter",  request_editletter_path(@request), class: "btn btn-mini" %>
+				<% end %>
+				
+				<%= link_to "Print letter", print_path(@request), class: "btn btn-mini" %>
+				<%= link_to "Download PDF", print_path(@request, format: "pdf"), class: "btn btn-mini" %>
+			</div>
 		</p>
 
 		<p>

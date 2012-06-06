@@ -9,6 +9,7 @@ gem 'liquid'
 gem 'heroku'
 gem 'taps'
 gem 'mysql2'
+gem 'wicked_pdf'
 
 group :development do
 	gem 'sqlite3'
