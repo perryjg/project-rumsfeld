@@ -81,6 +81,18 @@ describe Request do
 		it { should_not be_valid }
 	end
 	
+	describe "is in violation" do
+	 before { request.save }
+	 let(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent') }
+	 let(:status)       { FactoryGirl.create(:status, request: request, status_event: status_event) }
+	 
+	 it { should respond_to(:is_in_violation?) }
+	 
+	 it "should not be in violaation if sent less than 3 days ago" do
+	   request.is_in_violation?.should be_false
+	 end
+	end
+	
   describe "letter" do
   	context "before save" do
   		it "should be nill" do

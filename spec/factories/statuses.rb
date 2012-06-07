@@ -15,5 +15,6 @@ FactoryGirl.define do
   factory :status do
     status_event_id 1
     request
+    status_event
   end
 end
