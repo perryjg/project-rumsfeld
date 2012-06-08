@@ -6,6 +6,7 @@
       <strong>Please enter information as you wish it to appear in your records request letters:</strong>
     </p>
     <%= form_for(@request) do |f| %>
+      <%= render 'shared/error_messages' %>
       <%= f.label :recipient_name %>
       <%= f.text_field :recipient_name %>
 

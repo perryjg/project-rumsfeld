@@ -12,9 +12,8 @@
 require 'spec_helper'
 
 describe Status do
-	let!(:request)      { FactoryGirl.create(:request) }
-	let!(:status_event) { FactoryGirl.create(:status_event) }
-	let(:status)        { FactoryGirl.build(:status, request: request) }
+	let!(:request) { FactoryGirl.create(:request) }
+	let(:status)   { FactoryGirl.build(:status, request: request) }
 
 	subject { status }
 

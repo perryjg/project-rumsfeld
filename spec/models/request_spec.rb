@@ -81,17 +81,25 @@ describe Request do
 		it { should_not be_valid }
 	end
 	
+
 	describe "is in violation" do
-	 before { request.save }
-	 let(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent') }
-	 let(:status)       { FactoryGirl.create(:status, request: request, status_event: status_event) }
-	 
-	 it { should respond_to(:is_in_violation?) }
-	 
-	 it "should not be in violaation if sent less than 3 days ago" do
-	   request.is_in_violation?.should be_false
-	 end
+		let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent') }
+		before do
+			request.save
+			request.statuses.new( FactoryGirl.attributes_for(:status, status_event_id: status_event.id) )
+		end
+		 
+		it { should respond_to(:is_in_violation?) }
+		 
+		it "should not be in violaation if sent less than 3 days ago" do
+		   request.is_in_violation?.should be_false
+		end
+
+		it "should be in violation when  sent more than 3 days ago" do
+			pending
+		end
 	end
+
 	
   describe "letter" do
   	context "before save" do
@@ -128,12 +136,13 @@ describe Request do
   end
 
   describe "status association" do
-  	let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'pending') }
   	before { request.save }
+  	let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'new status') }
+  	let!(:status)       {FactoryGirl.create(:status, request: request, status_event: status_event) }
 
 		it "should be 'pending' upon save" do
 			current_status = request.current_status
-			current_status.status.should == "pending"
+			current_status.status.should == "new status"
 		end
 
 		describe "current_status" do
