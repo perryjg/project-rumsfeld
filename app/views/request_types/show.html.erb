@@ -1,12 +1,14 @@
 <% provide(:title, "#{@request_type.name} template") %>
-<p id="notice"><%= notice %></p>
+<div class="row-fluid">
+	<p id="notice"><%= notice %></p>
 
-<h1><%= @request_type.name %> Template</h1>
+	<h1><%= @request_type.name %> Template</h1>
 
-<p>
-<%= link_to 'Edit', edit_request_type_path(@request_type), class: "btn btn-primary btn-mini active" %>
-</p>
+	<p>
+	<%= link_to 'Edit', edit_request_type_path(@request_type), class: "btn btn-primary btn-mini active" %>
+	</p>
 
-<p>
-  <%= sanitize(RedCloth.new(@request_type.template).to_html) %>
-</p>
+	<p>
+	  <%= sanitize(RedCloth.new(@request_type.template).to_html) %>
+	</p>
+</div>

@@ -1,7 +1,7 @@
 <%= provide(:title, 'Update status') %>
 <h1>Update status</h1>
 
-<div class="row">
+<div class="row-fluid">
   <div class="span6 offset3">
     <%= form_for([@request, @status]) do |f| %>
 	    <%= f.label :status_event_id, "Status" %><br />

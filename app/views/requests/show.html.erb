@@ -1,5 +1,5 @@
 <% provide(:title, "Request") %>
-<div class="row">
+<div class="row-fluid">
 	<div class="span4">
 		<% if @request.user == current_user %>
 			<p><%= link_to 'Edit', edit_request_path(@request), class: "btn btn-mini" %></p>
