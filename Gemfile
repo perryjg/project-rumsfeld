@@ -35,10 +35,6 @@ group :test do
 	gem 'database_cleaner'
 end
 
-group :production do
-	gem 'mysql2'
-end
-
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
