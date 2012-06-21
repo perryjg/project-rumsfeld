@@ -1,11 +1,15 @@
 source 'http://rubygems.org'
 
+ruby '1.9.3'
 gem 'rails', '3.2.3'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'RedCloth'
 gem 'liquid'
 gem 'wicked_pdf'
+gem 'heroku'
+gem 'taps'
+gem 'mysql2'
 
 group :development do
 	gem 'sqlite3'
@@ -33,10 +37,8 @@ group :test do
 end
 
 group :production do
-	gem 'pg'
+	gem 'mysql2'
 end
-
-# To use ActiveModel has_secure_password
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
