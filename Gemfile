@@ -8,7 +8,7 @@ gem 'liquid'
 gem 'wicked_pdf'
 gem 'heroku'
 gem 'taps'
-gem 'mysql2'
+gem 'mysql2', '>= 0.3.11'
 
 group :development do
 	gem 'sqlite3'
@@ -33,10 +33,6 @@ group :test do
 	gem 'capybara'
 	gem 'faker'
 	gem 'database_cleaner'
-end
-
-group :production do
-	gem 'mysql2'
 end
 
 # To use Jbuilder templates for JSON
