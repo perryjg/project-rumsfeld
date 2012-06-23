@@ -5,10 +5,10 @@ gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'RedCloth'
 gem 'liquid'
-gem 'wicked_pdf'
 gem 'heroku'
 gem 'taps'
 gem 'mysql2', '>= 0.3.11'
+gem 'wicked_pdf'
 
 group :development do
 	gem 'sqlite3'

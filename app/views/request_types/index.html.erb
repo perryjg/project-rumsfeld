@@ -1,26 +1,27 @@
 <% provide(:title, "Letter templates") %>
-<h1>Letter templates</h1>
+<div class="row-fluid">
+  <h1>Letter templates</h1>
 
-<p>
-  <%= link_to 'New template', new_request_type_path, class: "btn btn-primary active" %>
-</p>
+  <p>
+    <%= link_to 'New template', new_request_type_path, class: "btn btn-primary active" %>
+  </p>
+</div>
 
-<table class="table table-condensed">
-<% @request_types.each do |request_type| %>
-  <tr>
-    <td>
-      <strong><%= request_type.name %></strong>
-      <%= link_to 'Edit', edit_request_type_path(request_type), class: "btn btn-mini"%>
-      <%= link_to 'Show', request_type_path(request_type), class: "btn btn-mini"%>
-      <%= link_to 'Destroy', request_type, confirm: 'Are you sure?', method: :delete, class: "btn btn-mini" %>
-    </td>
-  </tr>
-  <tr>
-    <td><%= sanitize(RedCloth.new(request_type.template).to_html) %></td>
-  </tr>
-  <tr><td></td></tr>
-<% end %>
-</table>
-
-<br />
-
+<div class="row-fluid">
+  <table class="table table-condensed">
+  <% @request_types.each do |request_type| %>
+    <tr>
+      <td>
+        <strong><%= request_type.name %></strong>
+        <%= link_to 'Edit', edit_request_type_path(request_type), class: "btn btn-mini"%>
+        <%= link_to 'Show', request_type_path(request_type), class: "btn btn-mini"%>
+        <%= link_to 'Destroy', request_type, confirm: 'Are you sure?', method: :delete, class: "btn btn-mini" %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= sanitize(RedCloth.new(request_type.template).to_html) %></td>
+    </tr>
+    <tr><td></td></tr>
+  <% end %>
+  </table>
+</div>

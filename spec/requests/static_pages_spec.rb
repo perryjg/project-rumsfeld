@@ -6,7 +6,7 @@ describe 'Static Pages' do
 	describe	'Home page' do
 		before { visit root_path}
 
-		it { should have_selector('h1', :text => 'Rumsfeld') }
+		it { should have_selector('h1') }
 		it { should have_selector( 'title', :text => 'Rumsfeld | Home' ) }
 	end
 
