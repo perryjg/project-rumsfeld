@@ -18,18 +18,21 @@
     <p><%= @user.address %></p>
     <p><%= @user.city %>, <%= @user.state %> <%= @user.zip %></p>
   </div>
+  <!--
   <div class="span10">
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
           <ul class="nav pull-left">
-            <li class="active"><%= link_to "New Request", new_request_path %></li>
+            <li class="active"><%= link_to "New Request", new_request_path, class: "btn btn-mini btn-primary active" %></li>
           </ul>
         </div>
       </div>
     </div>
   </div>
+  -->
   <div class="span10">
+    <p><%= link_to "New Request", new_request_path, class: "btn btn-mini btn-primary active" %></p>
     <table class="table table-condensed">
 	    <% if @user.requests.any? %>
       <% @user.requests.each do |request| %>
@@ -41,8 +44,8 @@
         <td><%= truncate(request.request_text, length: 50) %></td>
         <td>
           <div class="btn-group">
-            <%= link_to 'Show', request_path(request), class: "btn btn-mini btn-primary active"%>
-            <%= link_to 'Edit', edit_request_path(request), class: "btn btn-mini btn-primary active"%></td>
+            <%= link_to 'Show', request_path(request), class: "btn btn-mini"%>
+            <%= link_to 'Edit', edit_request_path(request), class: "btn btn-mini"%></td>
           </div>
       </tr>
       <% end %>
