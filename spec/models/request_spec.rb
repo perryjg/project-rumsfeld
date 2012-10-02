@@ -96,8 +96,14 @@ describe Request do
 		   request.is_in_violation?.should be_false
 		end
 
+		it "should not be in violation when sent 3 days ago" do
+			request.current_status.created_at = 3.business_days.ago
+			request.is_in_violation?.should be_false
+		end
+
 		it "should be in violation when  sent more than 3 days ago" do
-			pending
+			request.current_status.created_at = 4.business_days.ago
+			request.is_in_violation?.should be_true
 		end
 	end
 

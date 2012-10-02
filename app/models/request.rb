@@ -60,7 +60,7 @@ class Request < ActiveRecord::Base
 
   def is_in_violation?
     current_status.status == 'sent' &&
-      3.business_days.after(current_status.created_at.to_date).past?
+      4.business_days.after(current_status.created_at.to_date).past?
   end
 
   def sent?
