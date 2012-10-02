@@ -43,6 +43,8 @@ describe Request do
 	it { should respond_to(:generate_letter) }
 	it { should respond_to(:statuses) }
 	it { should respond_to(:current_status) }
+	it { should respond_to(:sent?) }
+	it { should respond_to(:response_received?) }
 
 	it { should be_valid }
 
@@ -81,7 +83,6 @@ describe Request do
 		it { should_not be_valid }
 	end
 	
-
 	describe "is in violation" do
 		let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent') }
 		before do
@@ -91,7 +92,7 @@ describe Request do
 		 
 		it { should respond_to(:is_in_violation?) }
 		 
-		it "should not be in violaation if sent less than 3 days ago" do
+		it "should not be in violation if sent less than 3 days ago" do
 		   request.is_in_violation?.should be_false
 		end
 
@@ -100,57 +101,91 @@ describe Request do
 		end
 	end
 
-	
-  describe "letter" do
-  	context "before save" do
-  		it "should be nill" do
-	  		request.letter.should == nil
-	  	end
-  	end
+ 	describe "letter" do
+  		context "before save" do
+  			it "should be nill" do
+	  			request.letter.should == nil
+	  		end
+  		end
 
-  	context "after save" do
-  		it "should be generated with template variables" do
-	      request.save
-	      saved_request = Request.find(request.id)
-	      saved_request.letter.should include(request.recipient_name)
-	    end
-    end
-  end
+  		context "after save" do
+  			it "should be generated with template variables" do
+	      	request.save
+	      	saved_request = Request.find(request.id)
+	      	saved_request.letter.should include(request.recipient_name)
+	    	end
+    	end
+  	end
 
 	describe "User association" do
 	  it { should respond_to(:user) }
 	  its(:user) { should == user }
 	  
-	  describe "when user_id is not present" do
-	    before { request.user_id = nil }
-	    it { should_not be_valid }
-    end
+	  	describe "when user_id is not present" do
+	    	before { request.user_id = nil }
+	    	it { should_not be_valid }
+    	end
 	  
-	  describe "accessible attributes" do
-	    it "should not allow access to user_id" do
-	      expect do
-	        Request.new(FactoryGirl.attributes_for(:request, user_id: user.id))
-        end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
-      end
-    end
-  end
+		describe "accessible attributes" do
+	    	it "should not allow access to user_id" do
+	     		expect do
+	        		Request.new(FactoryGirl.attributes_for(:request, user_id: user.id))
+        		end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      		end
+    	end
+  	end
 
-  describe "status association" do
-  	before { request.save }
-  	let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'new status') }
-  	let!(:status)       {FactoryGirl.create(:status, request: request, status_event: status_event) }
+	describe "status association" do
+  		before { request.save }
+  		let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'new status') }
+	  	let!(:status)       {FactoryGirl.create(:status, request: request, status_event: status_event) }
 
 		it "should be 'pending' upon save" do
 			current_status = request.current_status
 			current_status.status.should == "new status"
 		end
+	end
 
-		describe "current_status" do
-			let!(:old_status) { FactoryGirl.create(:status, request: request, created_at: 1.day.ago) }
-			let!(:new_status) { FactoryGirl.create(:status, request: request) }
+	describe "current_status" do
+		before { request.save }
+		let!(:old_status) { FactoryGirl.create(:status, request: request, created_at: 1.day.ago) }
+		let!(:new_status) { FactoryGirl.create(:status, request: request) }
 
-			it "should return the most recent status" do
-				request.current_status.should == new_status
+		it "should return the most recent status" do
+			request.current_status.should == new_status
+		end
+ 	end
+
+	describe "sent?" do
+		before { request.save }
+
+		it "should return false before sent" do
+			request.sent?.should be_false
+		end
+
+		context "after request is sent" do
+			let!(:status) { FactoryGirl.create(:status, request: request, status_event_id: 2) }
+			let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent', id: 2) }
+
+			it "should return false" do
+				request.sent?.should be_true
+			end
+		end
+	end
+
+	describe "request_received?" do
+		before { request.save }
+
+		it "should return false before response received" do
+			request.response_received?.should be_false
+		end
+
+		context "after request is sent" do
+			let!(:status) { FactoryGirl.create(:status, request: request, status_event_id: 2) }
+			let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent', id: 2) }
+
+			it "should return false" do
+				request.sent?.should be_true
 			end
 		end
 	end
