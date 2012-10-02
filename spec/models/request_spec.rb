@@ -82,30 +82,6 @@ describe Request do
 		before { request.recipient_state = 'G' }
 		it { should_not be_valid }
 	end
-	
-	describe "is in violation" do
-		let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent') }
-		before do
-			request.save
-			request.statuses.new( FactoryGirl.attributes_for(:status, status_event_id: status_event.id) )
-		end
-		 
-		it { should respond_to(:is_in_violation?) }
-		 
-		it "should not be in violation if sent less than 3 days ago" do
-		   request.is_in_violation?.should be_false
-		end
-
-		it "should not be in violation when sent 3 days ago" do
-			request.current_status.created_at = 3.business_days.ago
-			request.is_in_violation?.should be_false
-		end
-
-		it "should be in violation when  sent more than 3 days ago" do
-			request.current_status.created_at = 4.business_days.ago
-			request.is_in_violation?.should be_true
-		end
-	end
 
  	describe "letter" do
   		context "before save" do
@@ -192,6 +168,60 @@ describe Request do
 
 			it "should return false" do
 				request.sent?.should be_true
+			end
+		end
+	end
+	
+	describe "is in violation" do
+		let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent') }
+		before do
+			request.save
+			request.statuses.new( FactoryGirl.attributes_for(:status, status_event_id: status_event.id) )
+		end
+		 
+		it { should respond_to(:is_in_violation?) }
+		 
+		it "should not be in violation if sent less than 3 business days ago" do
+		   request.is_in_violation?.should be_false
+		end
+
+		it "should not be in violation when sent 3 business days ago" do
+			request.current_status.created_at = 3.business_days.ago
+			request.is_in_violation?.should be_false
+		end
+
+		it "should be in violation when  sent more than 3 business days ago" do
+			request.current_status.created_at = 4.business_days.ago
+			request.is_in_violation?.should be_true
+		end
+	end
+
+	describe "response is due" do
+		let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent') }
+		before do
+			request.save
+			request.statuses.new( FactoryGirl.attributes_for(:status, status_event_id: status_event.id) )
+		end
+
+		it { should respond_to(:response_due?) }
+
+		context "if sent date is less than 3 days ago" do
+			it "should be false" do
+				request.response_due?.should be_false
+			end
+		end
+
+		context "if sent date is 3 days ago" do
+			it "should be true" do
+				request.current_status.created_at = 3.business_days.ago
+				request.response_due?.should be_true
+			end
+		end
+
+		context "if sent date is more than 3 days ago" do
+			it "should be false" do
+				request.current_status.created_at = 4.business_days.ago
+				request.response_due?.should be_false
 			end
 		end
 	end

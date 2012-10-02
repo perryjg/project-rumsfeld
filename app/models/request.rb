@@ -67,6 +67,11 @@ class Request < ActiveRecord::Base
     statuses.where("status_events.status_name = 'sent'").joins(:status_event).count == 1
   end
 
+  def response_due?
+    current_status.status == 'sent' &&
+      3.business_days.after(current_status.created_at.to_date).today?
+  end
+
   def response_received?
     statuses.where("status_events.status_name = 'response received'").joins(:status_event).count == 1
   end
