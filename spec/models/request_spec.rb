@@ -43,6 +43,8 @@ describe Request do
 	it { should respond_to(:generate_letter) }
 	it { should respond_to(:statuses) }
 	it { should respond_to(:current_status) }
+	it { should respond_to(:sent?) }
+	it { should respond_to(:response_received?) }
 
 	it { should be_valid }
 
@@ -81,43 +83,43 @@ describe Request do
 		it { should_not be_valid }
 	end
 	
-  describe "letter" do
-  	context "before save" do
-  		it "should be nill" do
-	  		request.letter.should == nil
-	  	end
-  	end
+ 	describe "letter" do
+  		context "before save" do
+  			it "should be nill" do
+	  			request.letter.should == nil
+	  		end
+  		end
 
-  	context "after save" do
-  		it "should be generated with template variables" do
-	      request.save
-	      saved_request = Request.find(request.id)
-	      saved_request.letter.should include(request.recipient_name)
-	    end
-    end
-  end
+  		context "after save" do
+  			it "should be generated with template variables" do
+	      	request.save
+	      	saved_request = Request.find(request.id)
+	      	saved_request.letter.should include(request.recipient_name)
+	    	end
+    	end
+  	end
 
 	describe "User association" do
 	  it { should respond_to(:user) }
 	  its(:user) { should == user }
 	  
-	  describe "when user_id is not present" do
-	    before { request.user_id = nil }
-	    it { should_not be_valid }
-    end
+	  	describe "when user_id is not present" do
+	    	before { request.user_id = nil }
+	    	it { should_not be_valid }
+    	end
 	  
-	  describe "accessible attributes" do
-	    it "should not allow access to user_id" do
-	      expect do
-	        Request.new(FactoryGirl.attributes_for(:request, user_id: user.id))
-        end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
-      end
-    end
-  end
+	 	describe "accessible attributes" do
+	    	it "should not allow access to user_id" do
+	      		expect do
+	        		Request.new(FactoryGirl.attributes_for(:request, user_id: user.id))
+        		end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      		end
+    	end
+  	end
 
-  describe "status association" do
-  	let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'pending') }
-  	before { request.save }
+  	describe "status association" do
+  		let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'pending') }
+  		before { request.save }
 
 		it "should be 'pending' upon save" do
 			current_status = request.current_status
@@ -132,5 +134,39 @@ describe Request do
 				request.current_status.should == new_status
 			end
 		end
+	end
+
+	describe "sent?" do
+		before { request.save }
+
+		it "should return false before sent" do
+			request.sent?.should be_false
+		end
+
+		context "after request is sent" do
+			let!(:status) { FactoryGirl.create(:status, request: request, status_event_id: 2) }
+			let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent', id: 2) }
+
+			it "should return false" do
+				request.sent?.should be_true
+			end
+		end
+	end
+
+	describe "request_received?" do
+		before { request.save }
+
+		it "should return false before response received" do
+			request.response_received?.should be_false
+		end
+
+		# context "after request is sent" do
+		# 	let!(:status) { FactoryGirl.create(:status, request: request, status_event_id: 2) }
+		# 	let!(:status_event) { FactoryGirl.create(:status_event, status_name: 'sent', id: 2) }
+
+		# 	it "should return false" do
+		# 		request.sent?.should be_true
+		# 	end
+		# end
 	end
 end

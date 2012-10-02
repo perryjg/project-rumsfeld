@@ -58,6 +58,14 @@ class Request < ActiveRecord::Base
     statuses.first
   end
 
+  def sent?
+    statuses.where("status_events.status_name = 'sent'").joins(:status_event).count == 1
+  end
+
+  def response_received?
+    statuses.where("status_events.status_name = 'response received'").joins(:status_event).count == 1
+  end
+
   protected
 
     def status_pending
