@@ -49,7 +49,22 @@ class Request < ActiveRecord::Base
   delegate :name, :email, :phone, :title, :organization,
            :address, :city, :state, :zip,
            to: :user, prefix: true
+  
+  def self.unsent
+    all.select {|r| r.current_status.status == 'pending'}
+  end
 
+  def self.sent
+    all.select {|r| r.current_status.status == 'sent'}
+  end
+
+  def self.responses_due
+    all.select {|r| r.response_due?}
+  end
+
+  def self.responses_late
+    all.select {|r| r.is_in_violation?}
+  end
   def generate_letter
     self.letter =  Liquid::Template.parse(template).render('request' => self)
   end

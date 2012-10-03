@@ -11,26 +11,12 @@
 
 <div class="row">
   <div class="span2">
-    <p><%= @user.email %></p>
-    <p><%= @user.phone %></p>
-    <p><%= @user.title %></p>
-    <p><%= @user.organization %></p>
-    <p><%= @user.address %></p>
-    <p><%= @user.city %>, <%= @user.state %> <%= @user.zip %></p>
+    <p><%= @user.requests.count %> requests:</p>
+    <p><%= @user.requests.unsent.count %> unsent</p>
+    <p><%= @user.requests.sent.count %> awaiting response</p>
+    <p><%= @user.requests.responses_late.count %> past three-day limit<p>
   </div>
-  <!--
-  <div class="span10">
-    <div class="navbar">
-      <div class="navbar-inner">
-        <div class="container">
-          <ul class="nav pull-left">
-            <li class="active"><%= link_to "New Request", new_request_path, class: "btn btn-mini btn-primary active" %></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
+
   <div class="span10">
     <p><%= link_to "New Request", new_request_path, class: "btn btn-mini btn-primary active" %></p>
     <table class="table table-condensed">

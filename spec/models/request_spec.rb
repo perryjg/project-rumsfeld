@@ -225,4 +225,53 @@ describe Request do
 			end
 		end
 	end
+
+	describe "Request class methods" do
+		let!(:status_event1) { FactoryGirl.create(:status_event) }
+		let!(:status_event2) { FactoryGirl.create(:status_event, status_name: 'sent') }
+		before do
+			request.save
+			@request2 = FactoryGirl.create(:request)
+			FactoryGirl.create(:status, request: request, status_event_id: 1)
+			FactoryGirl.create(:status, request: @request2, status_event_id: 2)
+		end
+
+		describe ".unsent" do
+			it "should return pending requests" do
+				unsent = Request.unsent
+				unsent.each do |r|
+					r.current_status.status.should == 'pending'
+				end
+			end 
+		end
+
+		describe ".sent" do
+			it "should return sent requests" do
+				sent = Request.sent
+				sent.each do |r|
+					r.current_status.status.should == 'sent'
+				end
+			end 
+		end
+
+		describe ".responses_due" do
+			it "should return requests with responses do today" do
+				@request2.current_status.created_at = 3.days.ago
+				due = Request.responses_due
+				due.each do |r|
+					r.response_due?.should be_true
+				end
+			end 
+		end
+
+		describe ".responses_late" do
+			it "should return requests with past-due responses" do
+				@request2.current_status.created_at = 4.days.ago
+				late = Request.responses_late
+				late.each do |r|
+					r.response_late?.should be_true
+				end
+			end 
+		end
+	end
 end
