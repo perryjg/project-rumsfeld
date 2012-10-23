@@ -1,4 +1,4 @@
-<tr>
+<tr class=<%= request.is_in_violation? ? 'violation' : nil %> >
   <% if params[:controller] != 'users' %>
     <td><%= request.user.name %></td>
   <% end %>
